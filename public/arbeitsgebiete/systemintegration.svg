@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#0a6cd4" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Systemintegration">
+  <path d="M12 2.2V4.4M12 19.6v2.2M21.8 12h-2.2M4.4 12H2.2M18.93 5.07l-1.55 1.55M6.62 17.38l-1.55 1.55M18.93 18.93l-1.55-1.55M6.62 6.62 5.07 5.07" stroke-width="2.5"/>
+  <circle cx="12" cy="12" r="7.6" stroke-width="1.9"/>
+  <circle cx="12" cy="9.7" r="1.9" stroke-width="1.6"/>
+  <path d="M8.8 15.4a3.2 3.2 0 0 1 6.4 0" stroke-width="1.6"/>
+</svg>
