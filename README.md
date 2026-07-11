@@ -5,6 +5,9 @@ Stellenanzeigen — vom automatischen Einsammeln über Scoring und Anschreiben b
 zu Versand und Rückmeldungs-Tracking — in einer Pipeline-Ansicht, als
 installierbare PWA auch am Handy.
 
+**Live-Demo:** <https://job-application-cockpit-demo.vercel.app> (Demo-Modus,
+read-only — schreibende Aktionen sind deaktiviert)
+
 ![Übersicht](docs/screenshots/uebersicht.png)
 
 ## Features
