@@ -10,6 +10,14 @@ read-only — schreibende Aktionen sind deaktiviert)
 
 ![Übersicht](docs/screenshots/uebersicht.png)
 
+## Im Produktivbetrieb
+
+![Übersicht aus dem laufenden System](docs/screenshots/produktivbetrieb.png)
+
+Stand 04.09.2026: **1541 Anzeigen** im Bestand, davon **1448 bewertet**, **90 Bewerbungen** versendet, **49 Firmen-Antworten** zugeordnet und **2800 abgelaufene Anzeigen** aussortiert. An diesem Tag kamen 100 neue Anzeigen aus zwei Quellen dazu.
+
+Die folgenden Bilder stammen aus der [Live-Demo](https://job-application-cockpit-demo.vercel.app) mit erfundenen Firmen — dieselbe Oberfläche, ohne echte Bewerbungsdaten.
+
 ## Die Oberfläche
 
 | Versandfertig-Queue | E-Mail-Scout |
