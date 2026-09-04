@@ -10,7 +10,7 @@ read-only — schreibende Aktionen sind deaktiviert)
 
 ![Übersicht](docs/screenshots/uebersicht.png)
 
-## Die Oberflaeche
+## Die Oberfläche
 
 | Versandfertig-Queue | E-Mail-Scout |
 |---|---|
@@ -22,8 +22,8 @@ read-only — schreibende Aktionen sind deaktiviert)
 
 ## Zwei-Stufen-Versand
 
-Eine Bewerbung laesst sich nicht zurueckholen. Der Versand ist deshalb
-bewusst umstaendlich gebaut.
+Eine Bewerbung lässt sich nicht zurückholen. Der Versand ist deshalb
+bewusst umständlich gebaut.
 
 ```mermaid
 sequenceDiagram
@@ -35,34 +35,34 @@ sequenceDiagram
     participant W as n8n Versand-Kette
 
     UI->>DB: Versandfertig-Queue lesen
-    N->>UI: Anschreiben und Anhaenge pruefen
+    N->>UI: Anschreiben und Anhänge prüfen
     N->>UI: Stufe 1 Freigabe
-    UI-->>N: Rueckfrage mit Firma und Kanal
-    N->>UI: Stufe 2 Bestaetigung
-    UI->>API: Versand ausloesen
+    UI-->>N: Rückfrage mit Firma und Kanal
+    N->>UI: Stufe 2 Bestätigung
+    UI->>API: Versand auslösen
     API->>DB: Sperre setzen, eine Bewerbung pro Firma
     API->>W: Webhook
     W->>DB: Status beworben, Zeitstempel, Message-ID
-    Note over DB: Die Message-ID macht die Antwort spaeter zuordenbar
+    Note over DB: Die Message-ID macht die Antwort später zuordenbar
 ```
 
 ## Entscheidungen, die ich bewusst getroffen habe
 
-**Der Agent darf nur lesen.** Die Chat-Funktion uebersetzt Fragen in SQL. Statt
-dem Modell zu vertrauen, laeuft jede erzeugte Abfrage gegen eine Whitelist:
+**Der Agent darf nur lesen.** Die Chat-Funktion übersetzt Fragen in SQL. Statt
+dem Modell zu vertrauen, läuft jede erzeugte Abfrage gegen eine Whitelist:
 nur SELECT und WITH, kein Semikolon, keine Mehrfachanweisung. Was nicht durch
-das Gatter passt, wird nicht ausgefuehrt.
+das Gatter passt, wird nicht ausgeführt.
 
-**Der Scout umgeht kein CAPTCHA.** Stoesst die Adress-Suche auf eine
-Bot-Erkennung, ueberspringt sie die Stelle. Eine Grenze, die im Code steht und
-in der Oberflaeche sichtbar ist.
+**Der Scout umgeht kein CAPTCHA.** Stößt die Adress-Suche auf eine
+Bot-Erkennung, überspringt sie die Stelle. Eine Grenze, die im Code steht und
+in der Oberfläche sichtbar ist.
 
 **Eine Bewerbung pro Firma.** Die Sperre sitzt in der Datenbank, nicht in der
-Oberflaeche. Zwei Anzeigen derselben Firma koennen nicht versehentlich zu zwei
+Oberfläche. Zwei Anzeigen derselben Firma können nicht versehentlich zu zwei
 Bewerbungen werden.
 
-**Kein ORM.** Alle Zustandsuebergaenge sind parametrisierte SQL-Updates in
-API-Routen. Das haelt die Schicht duenn und jeden Uebergang lesbar.
+**Kein ORM.** Alle Zustandsübergänge sind parametrisierte SQL-Updates in
+API-Routen. Das hält die Schicht dünn und jeden Übergang lesbar.
 
 ## Features
 
