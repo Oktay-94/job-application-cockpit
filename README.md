@@ -10,6 +10,60 @@ read-only — schreibende Aktionen sind deaktiviert)
 
 ![Übersicht](docs/screenshots/uebersicht.png)
 
+## Die Oberflaeche
+
+| Versandfertig-Queue | E-Mail-Scout |
+|---|---|
+| ![Versandfertig](docs/screenshots/versandfertig.png) | ![E-Mail-Scout](docs/screenshots/email-scout.png) |
+
+| Agent-Chat | Job-Friedhof |
+|---|---|
+| ![Agent](docs/screenshots/agent.png) | ![Abgelaufen](docs/screenshots/abgelaufen.png) |
+
+## Zwei-Stufen-Versand
+
+Eine Bewerbung laesst sich nicht zurueckholen. Der Versand ist deshalb
+bewusst umstaendlich gebaut.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant N as Nutzer
+    participant UI as Cockpit
+    participant API as API-Route
+    participant DB as PostgreSQL
+    participant W as n8n Versand-Kette
+
+    UI->>DB: Versandfertig-Queue lesen
+    N->>UI: Anschreiben und Anhaenge pruefen
+    N->>UI: Stufe 1 Freigabe
+    UI-->>N: Rueckfrage mit Firma und Kanal
+    N->>UI: Stufe 2 Bestaetigung
+    UI->>API: Versand ausloesen
+    API->>DB: Sperre setzen, eine Bewerbung pro Firma
+    API->>W: Webhook
+    W->>DB: Status beworben, Zeitstempel, Message-ID
+    Note over DB: Die Message-ID macht die Antwort spaeter zuordenbar
+```
+
+## Entscheidungen, die ich bewusst getroffen habe
+
+**Der Agent darf nur lesen.** Die Chat-Funktion uebersetzt Fragen in SQL. Statt
+dem Modell zu vertrauen, laeuft jede erzeugte Abfrage gegen eine Whitelist:
+nur SELECT und WITH, kein Semikolon, keine Mehrfachanweisung. Was nicht durch
+das Gatter passt, wird nicht ausgefuehrt.
+
+**Der Scout umgeht kein CAPTCHA.** Stoesst die Adress-Suche auf eine
+Bot-Erkennung, ueberspringt sie die Stelle. Eine Grenze, die im Code steht und
+in der Oberflaeche sichtbar ist.
+
+**Eine Bewerbung pro Firma.** Die Sperre sitzt in der Datenbank, nicht in der
+Oberflaeche. Zwei Anzeigen derselben Firma koennen nicht versehentlich zu zwei
+Bewerbungen werden.
+
+**Kein ORM.** Alle Zustandsuebergaenge sind parametrisierte SQL-Updates in
+API-Routen. Das haelt die Schicht duenn und jeden Uebergang lesbar.
+
 ## Features
 
 - **Pipeline-Übersicht** — KPIs, Pipeline-Band (Neu → Versandfertig → Beworben →
